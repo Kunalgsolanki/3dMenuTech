@@ -1,0 +1,140 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.0/dist/mindar-image-aframe.prod.js"></script>
+  <script>
+    
+    showInfo = () => {
+      let y = 0;
+      const LinkdinButton = document.querySelector("#linkdin");
+      const InstagramButton = document.querySelector("#instagarm");
+      const YouTubeButton = document.querySelector("#youtube");
+      const text = document.querySelector("#text");
+
+      setTimeout(() => {
+        LinkdinButton.setAttribute('visible', true);
+      }, 1000);
+      setTimeout(() => {
+        InstagramButton.setAttribute('visible', true);
+      }, 1500);
+      setTimeout(() => {
+        YouTubeButton.setAttribute('visible', true);
+      }, 1600)
+      let currentTab = '';
+      LinkdinButton.addEventListener('click', function (evt) {
+        currentTab = 'web';
+        text.setAttribute("value", "Linkdin  ");
+      });
+      InstagramButton.addEventListener('click', function (evt) {
+        currentTab = 'email';
+        text.setAttribute("value", "Instagram ");
+      });
+      YouTubeButton.addEventListener('click', function (evt) {
+        currentTab = 'lindin';
+        text.setAttribute("value", "YouTube");
+      });
+      text.addEventListener('click', function (evt) {
+        if (currentTab === 'web') {
+          window.location.href = "https://www.linkedin.com/company/menuviewar/";
+        } else if (currentTab === 'email') {
+          window.location.href = "https://www.instagram.com/3dmenu.tech/?igshid=YmMyMTA2M2Y%3D";
+        } else if (currentTab === 'lindin') {
+          window.location.href = "https://youtube.com/@3DMenu_";
+        }
+      });
+      console.log("hello")
+    }
+    
+    const ShowAvtar = (onDone) => {
+      const avatar = document.querySelector('#name');
+      let z = -0.3;
+      const id = setInterval(() => {
+        {   
+          z += 0.008;
+          if (z >= 0.3) {
+            clearInterval(id); 
+            onDone();
+          }
+        }
+        avatar.setAttribute("position", "0 -0.25 " + z)
+      }, 10)
+    }
+    AFRAME.registerComponent('mytarget', {
+      init: function () {
+        this.el.addEventListener("targetFound", event => {// samjavanu chhe 
+          ShowAvtar(() => {
+
+            setTimeout(() => {
+              showInfo();
+            }, 300)
+          })
+
+        })
+
+      },
+
+    });
+
+  </script>
+</head>
+
+<body>
+  <a-scene mindar-image="imageTargetSrc: targets.mind;" color-space="sRGB"
+    renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false">
+
+   
+    <a-assets>
+      <img id="card" src="./3dMenu.jpeg" />
+      <img id="card1" src="./youtube.png" />
+      <img id="card2" src="./instagram.png" />
+      <img id="card4" src="./linkdin3.jpg" />
+
+      <video id="paintandquest-video-mp4" preload autoplay loop="true" src="./video3.mp4"></video>
+
+      <a-asset-item id="avatarModel4" src="./TEXT.glb"></a-asset-item>
+      
+    </a-assets>
+
+  
+    <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"
+      raycaster="far: 10000; objects: .clickable">
+    </a-camera>
+    
+    <a-entity mytarget id="mytarget" mindar-image-target="targetIndex: 0">
+     
+      <a-plane src="#card" position="0 0 0" height="1" width="1" rotation="0 0 0"></a-plane>
+      <a-image visible=false id="youtube" class="clickable" src="#card1" alpha-test="0.5" position="-0.28 -0.65 0"
+        height="0.2" width="0.2"></a-image>
+      <a-image visible=false id="instagarm" class="clickable" src="#card2" alpha-test="0.5" position="0 -0.65 0"
+        height="0.2" width="0.2"></a-image>
+      <a-video id="paintandquest-video-mp4" webkit-playsinline playsinline autoplay="true" width="1.2" height="0.552" position="1.2 0 0" src="#paintandquest-video-mp4"></a-video>
+
+
+      <a-image visible=false id="linkdin" class="clickable" src="#card4" alpha-test="0.5" position="0.3 -0.65 0"
+        height="0.2" width="0.2"></a-image>
+
+
+      <a-gltf-model rotation="0 0 0 " position="0 -0.4 0" scale="0.003 0.003 0.003" src="#avatarModel" id="name">
+      </a-gltf-model>
+      <a-gltf-model rotation="0 0 0 " id="name2" position="0 -0.4 0.1" scale="0.004 0.004 0.004"
+        src="#avatarModel1"></a-gltf-model>
+      <a-gltf-model rotation="0 0 0 " position="0 -0.4 0.1" scale="0.004 0.004 0.004"
+        src="#avatarModel2"></a-gltf-model>
+      <a-gltf-model rotation="0 0 0 " position="0 -0.4 0.1" scale="0.004 0.004 0.004"
+        src="#avatarModel3"></a-gltf-model>
+      <a-gltf-model rotation="0 0 0 " position="0 0.5 0.1" scale="0.004 0.004 0.005"
+        src="#avatarModel4"></a-gltf-model>
+      <a-gltf-model rotation="0 0 0 " position="0.2 -0.2 0.1" scale="0.005 0.005 0.005"
+        src="#avatarModel5"></a-gltf-model>
+
+      <a-text id="text" class="clickable" value="" color="blue" align="center" width="2" position="0 -0.9 0" geometry="primitive:plane; height: 0.1; width: 2
+        ;" material="opacity: 0.5"></a-text>
+    </a-entity>
+
+  </a-scene>
+</body>
+
+</html>
